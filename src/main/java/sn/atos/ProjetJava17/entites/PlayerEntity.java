@@ -5,7 +5,7 @@ import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import sn.atos.ProjetJava17.enums.Gender;
+import sn.atos.ProjetJava17.entites.enums.Gender;
 
 import java.io.Serializable;
 

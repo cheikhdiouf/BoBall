@@ -4,6 +4,10 @@ package sn.atos.ProjetJava17.filter;
 import java.io.Serial;
 import java.util.Objects;
 
+
+import java.io.Serial;
+import java.util.Objects;
+
 public class StringFilter extends Filter<String> {
     @Serial
     private static final long serialVersionUID = 1L;
