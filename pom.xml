@@ -11,9 +11,9 @@
 	</parent>
 
 	<groupId>sn.atos</groupId>
-	<artifactId>ProjetJava17</artifactId>
+	<artifactId>ProjetJava</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>ProjetJava17</name>
+	<name>ProjetJava</name>
 	<description>Demo project for Spring Boot</description>
 
 	<properties>
@@ -52,7 +52,11 @@
 			<groupId>io.zipkin.reporter2</groupId>
 			<artifactId>zipkin-reporter-brave</artifactId>
 		</dependency>
-
+		<dependency>
+			<groupId>com.github.loki4j</groupId>
+			<artifactId>loki-logback-appender</artifactId>
+			<version>1.5.2</version>
+		</dependency>
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-docker-compose</artifactId>
