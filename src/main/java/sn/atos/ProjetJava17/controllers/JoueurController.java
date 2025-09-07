@@ -11,7 +11,6 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.web.bind.annotation.*;
 import sn.atos.ProjetJava17.dto.JoueurDto;
-import sn.atos.ProjetJava17.entites.Joueur;
 import sn.atos.ProjetJava17.entites.response.BaseResponse;
 import sn.atos.ProjetJava17.entites.response.BaseResponseStatut;
 import sn.atos.ProjetJava17.exception.BadRequestAlertException;
@@ -48,7 +47,9 @@ public class JoueurController {
                 .codeRetour(0)
                 .content("joueur", result);
     }
-    @GetMapping("/transactions")
+
+    @Operation(summary = "Liste des joueur")
+    @GetMapping("/joueurs")
     public BaseResponse<List<JoueurDto>> getAllTransactions(
             @ParameterObject @PageableDefault(size = 20) Pageable pageable,
             @ParameterObject JoueurCriteria criteria
@@ -61,6 +62,7 @@ public class JoueurController {
                 .totalItems(page.getTotalElements())
                 .content("transactions", page.getContent());
     }
+
 
 
 }
