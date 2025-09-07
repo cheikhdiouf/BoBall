@@ -21,7 +21,7 @@ import sn.atos.ProjetJava17.services.impl.JoueurServiceImpl;
 import java.util.List;
 
 @RestController
-@RequestMapping("/api/v1")
+@RequestMapping("/api/v1") 
 public class JoueurController {
     private final Logger log = LoggerFactory.getLogger(JoueurController.class);
 
