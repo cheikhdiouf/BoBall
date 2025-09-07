@@ -1,6 +1,5 @@
 package sn.atos.ProjetJava17.dto;
 
-import lombok.Data;
 import sn.atos.ProjetJava17.entites.PlayerEntity;
 
 import java.util.List;

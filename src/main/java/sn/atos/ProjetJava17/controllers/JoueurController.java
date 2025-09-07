@@ -48,8 +48,6 @@ public class JoueurController {
                 .codeRetour(0)
                 .content("joueur", result);
     }
-
-
     @GetMapping("/transactions")
     public BaseResponse<List<JoueurDto>> getAllTransactions(
             @ParameterObject @PageableDefault(size = 20) Pageable pageable,
