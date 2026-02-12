@@ -1,0 +1,35 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/machalla
+    username: postgres
+    password: passer
+    driver-class-name: org.postgresql.Driver
+
+  jpa:
+    hibernate:
+      ddl-auto: update
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+    show-sql: true
+
+  mvc:
+    pathmatch:
+      matching-strategy: ant_path_matcher
+
+server:
+  port: 8090
+
+mail:
+  host: smtp.gmail.com
+  port: 587
+  username:
+  password:
+  #from: noreply@drn.sn
+  properties:
+    mail:
+      smtp:
+        auth: true
+        starttls:
+          enable: true
+          #noreply@drn.sn
