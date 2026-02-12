@@ -1,4 +1,13 @@
 spring:
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: dioufcheikhtt@gmail.com
+    password: zxsc dhdr nozv sbil  # mot de passe application Gmail
+    properties:
+      mail.smtp.auth: true
+      mail.smtp.starttls.enable: true
+
   datasource:
     url: jdbc:postgresql://${POSTGRES_HOST:localhost}:5432/machalla
     username: postgres
@@ -20,16 +29,3 @@ spring:
 server:
   port: 8090
 
-mail:
-  host: smtp.gmail.com
-  port: 587
-  username:
-  password:
-  #from: noreply@drn.sn
-  properties:
-    mail:
-      smtp:
-        auth: true
-        starttls:
-          enable: true
-          #noreply@drn.sn

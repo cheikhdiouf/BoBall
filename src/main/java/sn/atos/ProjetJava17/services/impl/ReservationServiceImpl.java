@@ -8,6 +8,7 @@ import sn.atos.ProjetJava17.dto.ReservationDto;
 import sn.atos.ProjetJava17.entites.Reservation;
 import sn.atos.ProjetJava17.mappers.ReservationMapper;
 import sn.atos.ProjetJava17.repository.ReservationRepository;
+import sn.atos.ProjetJava17.services.EmailService;
 import sn.atos.ProjetJava17.services.ReservationService;
 
 import java.util.List;
@@ -22,13 +23,15 @@ public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
+    private final EmailService emailService;
 
     public ReservationServiceImpl(
             ReservationRepository reservationRepository,
-            ReservationMapper reservationMapper
+            ReservationMapper reservationMapper, EmailService emailService
     ) {
         this.reservationRepository = reservationRepository;
         this.reservationMapper = reservationMapper;
+        this.emailService = emailService;
     }
 
     @Override
@@ -48,17 +51,32 @@ public class ReservationServiceImpl implements ReservationService {
                 .collect(Collectors.toList());
     }
 
-    @Override
-    public ReservationDto save(ReservationDto dto) {
-        log.debug("Save Reservation : {}", dto);
-        Reservation entity = reservationMapper.toEntity(dto);
-        entity = reservationRepository.save(entity);
-        return reservationMapper.toDto(entity);
-    }
 
     @Override
     public void delete(Integer id) {
         log.debug("Delete Reservation by id : {}", id);
         reservationRepository.deleteById(id);
+    }
+
+    @Override
+    public ReservationDto save(ReservationDto dto) {
+
+        log.debug("Save Reservation : {}", dto);
+
+        // 1️⃣ DTO → Entity
+        Reservation entity = reservationMapper.toEntity(dto);
+
+        // 2️⃣ Save en base
+        entity = reservationRepository.save(entity);
+
+        // 3️⃣ Envoi email
+        try {
+            emailService.sendReservationNotification(entity);
+        } catch (Exception e) {
+            log.error("Erreur lors de l'envoi du mail : ", e);
+        }
+
+        // 4️⃣ Entity → DTO
+        return reservationMapper.toDto(entity);
     }
 }
