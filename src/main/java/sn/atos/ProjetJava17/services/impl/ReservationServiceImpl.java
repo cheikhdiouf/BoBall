@@ -20,14 +20,14 @@ import java.util.stream.Collectors;
 public class ReservationServiceImpl implements ReservationService {
 
     private final Logger log = LoggerFactory.getLogger(ReservationServiceImpl.class);
-
     private final ReservationRepository reservationRepository;
     private final ReservationMapper reservationMapper;
     private final EmailService emailService;
 
     public ReservationServiceImpl(
             ReservationRepository reservationRepository,
-            ReservationMapper reservationMapper, EmailService emailService
+            ReservationMapper reservationMapper,
+            EmailService emailService
     ) {
         this.reservationRepository = reservationRepository;
         this.reservationMapper = reservationMapper;
@@ -37,8 +37,7 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public Optional<ReservationDto> findById(Integer id) {
         log.debug("Find Reservation by id : {}", id);
-        return reservationRepository
-                .findById(id)
+        return reservationRepository.findById(id)
                 .map(reservationMapper::toDto);
     }
 
@@ -51,7 +50,6 @@ public class ReservationServiceImpl implements ReservationService {
                 .collect(Collectors.toList());
     }
 
-
     @Override
     public void delete(Integer id) {
         log.debug("Delete Reservation by id : {}", id);
@@ -60,7 +58,6 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public ReservationDto save(ReservationDto dto) {
-
         log.debug("Save Reservation : {}", dto);
 
         // 1️⃣ DTO → Entity
@@ -69,12 +66,8 @@ public class ReservationServiceImpl implements ReservationService {
         // 2️⃣ Save en base
         entity = reservationRepository.save(entity);
 
-        // 3️⃣ Envoi email
-        try {
-            emailService.sendReservationNotification(entity);
-        } catch (Exception e) {
-            log.error("Erreur lors de l'envoi du mail : ", e);
-        }
+        // 3️⃣ Envoi email **asynchrone**
+        emailService.sendReservationNotification(entity);
 
         // 4️⃣ Entity → DTO
         return reservationMapper.toDto(entity);
