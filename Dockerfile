@@ -1,14 +1,13 @@
-# Utiliser une image JDK pour Java 17
-FROM eclipse-temurin:17-jdk-jammy AS backend-build
-
-# Définir le répertoire de travail
+# Étape build Maven
+FROM maven:3.9.3-eclipse-temurin-20 AS build
 WORKDIR /app
+COPY pom.xml .
+COPY src ./src
+RUN mvn clean package -DskipTests
 
-# Copier le JAR construit dans le conteneur
-COPY target/*.jar springboot-app.jar
-
-# Exposer le port que Spring Boot utilise (par défaut 8080)
+# Étape runtime
+FROM eclipse-temurin:20-jre-alpine
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
 EXPOSE 8090
-
-# Commande pour lancer l'application
-ENTRYPOINT ["java", "-jar", "springboot-app.jar"]
+ENTRYPOINT ["java", "-jar", "app.jar"]
